@@ -1,0 +1,28 @@
+<form bindsubmit="formSubmit">
+  <button bindtap="uploadImg" type="primary" size="mini" class="addType">上传照片</button>
+  <view class="{{isShowImg==1 ? 'tab_show':'tab_hide'}}">
+    <image style="margin:20rpx;width:710rpx;height:300rpx;" src="{{uploadImgSrc}}"></image>
+  </view>
+  <view class="row-2">
+    <view class="row-2-1">
+      <span>*名称</span>
+      <input name="name" type="text" />
+    </view>
+    <view class="row-2-2">
+      <span>描述</span>
+      <input name="remark" type="text" />
+    </view>
+  </view>
+  <!-- 价格tab -->
+  <view class="tab3">
+    <view class="tab3-row1">
+      <view class="tab3-row1-cols2">原价</view>
+      <view class="tab3-row1-cols3">会员价</view>
+    </view>
+    <view class="tab3-row2">
+      <input name="price" type="number" class="tab3-row2-cols2" value="" />
+      <input name="memberPrice" type="number" class="tab3-row2-cols3" value="" />
+    </view>
+  </view>
+  <button formType="submit" type="primary" class="row-last">提交</button>
+</form>

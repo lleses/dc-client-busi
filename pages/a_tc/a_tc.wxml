@@ -1,0 +1,12 @@
+<view style="padding:20rpx;width:710rpx;border-bottom: 6rpx solid #c20c0c;">
+  <button bindtap="toUrl" type="primary" size="mini" class="addType">添加套餐</button>
+</view>
+<div class="content_tab_show">
+  <view wx:for="{{tcs}}">
+    <div class="content_cols">
+      <image data-selid="{{item.id}}" src="{{'http://localhost:8080'+item.imgPath}}" bindtap="toEditUrl"></image>
+      <span>{{item.name}}</span>
+      <em>Y{{item.price}}</em>
+    </div>
+  </view>
+</div>
