@@ -1,0 +1,5 @@
+<div class="tc_content_cols" wx:for="{{tcs}}">
+    <image data-selid="{{item.id}}" src="{{'http://localhost:8080'+item.imgPath}}" bindtap="toUrl"></image>
+    <span>{{item.name}}</span>
+    <em>Y{{item.price}}</em>
+</div>

@@ -1,0 +1,27 @@
+<div wx:for="{{shoppingCarts}}" class="pay_tab_1">
+  <div class="pay_cols1">{{item.commodity.name}}</div>
+  <div class="pay_cols2">X{{item.num}}</div>
+  <div class="pay_cols3">Y{{item.money}}</div>
+</div>
+
+<div class="pay_tab_2">
+  <div class="pay_cols4 pay_cols_greed">总价</div>
+  <div class="pay_cols5">Y{{zj}}</div>
+</div>
+
+<!-- <div class="pay_tab_2">
+  <div class="pay_cols4 pay_cols_greed">原价</div>
+  <div class="pay_cols5">Y130.00</div>
+  <div class="pay_cols4 pay_cols_orange">折后价</div>
+  <div class="pay_cols5">Y130.00</div>
+</div> -->
+
+<!-- <div class="pay_tab_3">
+  <div class="pay_cols6">线下买单</div>
+  <div class="pay_cols7">余额支付</div>
+  <div class="pay_cols8">微信支付</div>
+</div> -->
+
+<div class="pay_tab_3">
+  <div bindtap="paySuss" class="pay_cols8">微信支付</div>
+</div>

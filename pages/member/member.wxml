@@ -1,0 +1,20 @@
+<!--index.wxml-->
+<div class="member_tab1">
+  <div class="member_tab1_cols1">
+    <image src="{{userInfo.avatarUrl}}"></image>
+  </div>
+  <div class="member_tab1_cols2">
+    <span>{{userInfo.nickName}}</span>
+    <span>普通用户</span>
+  </div>
+</div>
+<div class="member_tab2">
+  <div class="member_tab2_cols1">
+    <em>0.00元</em>
+    <span>余额</span>
+  </div>
+  <div class="member_tab2_cols2">
+    <em>0分</em>
+    <span>积分</span>
+  </div>
+</div>
