@@ -1,0 +1,36 @@
+<image style="width:100%;height:115px;" src="/img/index_title.jpeg"></image>
+<scroll-view scroll-x="true" class="index_title">
+  <view wx:for="{{types}}" data-type-id="{{item.id}}" data-type-index="{{index}}" bindtap="selType" class="index_title_span {{index==typeIndex ? 'title_cols':''}}">{{item.name}}</view>
+</scroll-view>
+
+<div class="content_tab_show">
+  <view wx:for="{{commoditys}}">
+    <div class="content_cols">
+      <image class="content_cols_image" data-selid="{{item.id}}" src="{{'http://localhost:8080'+item.imgPath}}" bindtap="toUrl"></image>
+      <span>{{item.name}}</span>
+      <em>Y{{item.price}}</em>
+      <view class="buy_view">
+        <image bindtap="addBuyNum" data-buy-id="{{item.id}}" data-com-price="{{item.price}}" class="img_icon_add" src="/img/icon_add.jpeg"></image>
+        <text class="buy_num {{item.orderNum==0 ? 'content_tab_hide':''}}">{{item.orderNum}}</text>
+        <image bindtap="lessBuyNum" data-buy-id="{{item.id}}" data-com-price="{{item.price}}" class="img_icon_less {{item.orderNum==0 ? 'content_tab_hide':''}}" src="/img/icon_less.jpeg"></image>
+      </view>
+    </div>
+  </view>
+</div>
+
+<!--垂直滚动，这里必须设置高度
+<scroll-view scroll-y="true" style="height: 200px">
+    <view style="background: red; width: 100px; height: 100px" ></view>
+    <view style="background: green; width: 100px; height: 100px"></view>
+    <view style="background: blue; width: 100px; height: 100px"></view>
+    <view style="background: yellow; width: 100px; height: 100px"></view>
+</scroll-view>-->
+
+
+<!--水平滚动
+<scroll-view scroll-x="true" style="white-space: nowrap; display: flex" >
+  <view style="background: red; width: 200px; height: 100px; display: inline-block" ></view>
+  <view style="background: green; width: 200px; height: 100px; display: inline-block"></view>
+  <view style="background: blue; width: 200px; height: 100px; display: inline-block"></view>
+  <view style="background: yellow; width: 200px; height: 100px; display: inline-block"></view>
+</scroll-view> -->

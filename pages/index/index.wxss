@@ -1,0 +1,86 @@
+/**index.wxss**/
+
+.index_title {
+  text-align: center;
+  border-top: 6rpx solid #c20c0c;
+  border-bottom: 6rpx solid #c20c0c;
+  height: 120rpx;
+  display: flex;
+  white-space: nowrap;
+}
+
+.index_title_span {
+  width: 150rpx;
+  height: 40rpx;
+  margin: 20rpx;
+  padding: 20rpx 0px;
+  border-radius: 10rpx;
+  display: inline-block;
+}
+
+.title_cols {
+  color: white;
+  background: #ffc107;
+  text-align: center;
+}
+
+.content_tab_show {
+  float: left;
+  width: 100%;
+}
+
+.content_tab_hide {
+  display: none;
+}
+
+.content_cols {
+  float: left;
+  width: 46%;
+  padding: 2%;
+  border-bottom: 2rpx solid #ddd;
+}
+
+.content_cols_image {
+  width: 100%;
+  height: 200rpx;
+}
+
+.content_cols span {
+  float: left;
+  width: 195rpx;
+  font-size: 28rpx;
+  padding: 10rpx 0px;
+}
+
+.content_cols em {
+  float: left;
+  width: 195rpx;
+  color: red;
+  font-size: 24rpx;
+}
+
+.buy_view {
+  float: left;
+  width: 150rpx;
+  margin-top: 10rpx;
+}
+
+.img_icon_add {
+  width: 50rpx;
+  height: 50rpx;
+  float: right;
+}
+
+.img_icon_less {
+  width: 50rpx;
+  height: 50rpx;
+  float: right;
+}
+
+.buy_num {
+  height: 50rpx;
+  width: 50rpx;
+  float: right;
+  line-height: 50rpx;
+  text-align: center;
+}
