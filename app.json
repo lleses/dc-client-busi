@@ -1,0 +1,78 @@
+{
+  "pages": [
+    "pages/bill/bill",
+      "pages/member/member",
+    "pages/pay/pay",
+    
+    "pages/commodity/commodity",
+    "pages/index/index",
+    
+    
+    
+    
+    
+    
+
+   
+    "pages/bill_detail/bill_detail",
+
+
+    
+    
+    
+    "pages/tc/tc",
+    "pages/tc_detail/tc_detail",
+    "pages/a_tc/a_tc",
+    "pages/a_tc_add/a_tc_add",
+    "pages/a_tc_edit/a_tc_edit",
+
+    
+    
+    "pages/commodity_add/commodity_add",
+    "pages/commodity_edit/commodity_edit",
+    
+    
+    
+  
+    
+    "pages/detail/detail"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarTitleText": "WeChatx",
+    "navigationBarBackgroundColor": "#009688",
+    "navigationBarTextStyle": "#ddd"
+  },
+  "tabBar": {
+    "color": "#ddd",
+    "selectedColor": "#3cc51f",
+    "backgroundColor": "#fff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "img/icon_1.jpg",
+        "selectedIconPath": "img/icon_1.jpg",
+        "text": "点餐"
+      },
+      {
+        "pagePath": "pages/tc/tc",
+        "iconPath": "img/icon_2.jpg",
+        "selectedIconPath": "img/icon_2.jpg",
+        "text": "套餐"
+      },
+      {
+        "pagePath": "pages/pay/pay",
+        "iconPath": "img/icon_3.jpg",
+        "selectedIconPath": "img/icon_3.jpg",
+        "text": "结算"
+      },
+      {
+        "pagePath": "pages/member/member",
+        "iconPath": "img/icon_4.jpg",
+        "selectedIconPath": "img/icon_4.jpg",
+        "text": "个人"
+      }
+    ]
+  }
+}
