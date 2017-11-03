@@ -1,0 +1,83 @@
+
+.pay_tab_1{
+  float: left;
+  width: 100%;
+  padding:20rpx 0px;
+  border-top:6rpx solid #ddd;
+}
+.pay_cols1{
+  float: left;
+  width: 45%;
+  padding-left:5%;
+}
+.pay_cols2{
+  float: left;
+  width: 30%;
+}
+.pay_cols3{
+  float: left;
+  width: 15%;
+  padding-right: 5%;
+  text-align: right;
+}
+
+.pay_tab_2{
+  float: left;
+  width: 100%;
+  padding:20rpx 0px 0px 0px;
+  border-top:6rpx solid #ddd;
+  border-bottom: 6rpx solid #ddd;
+}
+.pay_cols4{
+  float: left;
+  width: 75%;
+  padding-left:5%;
+  padding-bottom: 20rpx;
+}
+.pay_cols5{
+  float: left;
+  width: 15%;
+  padding-right: 5%;
+  text-align: right;
+  padding-bottom: 20rpx;
+}
+.pay_cols_greed{
+  color: #009688;
+}
+
+.pay_cols_orange{
+  color: #FF9800;
+}
+
+.pay_tab_3{
+  float: left;
+  width: 100%;
+  padding:80rpx 0px;
+  text-align: center;
+  color: white;
+}
+
+.pay_cols6{
+  float: left;
+  width: 30%;
+  margin:0px 1% 0px 2%;
+  padding:20rpx 0px;
+  background-color: #FF9800;
+  border-radius:5px;
+}
+.pay_cols7{
+  float: left;
+  width: 30%;
+  margin:0px 2%;
+  padding:20rpx 0px;
+  background-color: #FF9800;
+  border-radius:5px;
+}
+.pay_cols8{
+  float: left;
+  width: 30%;
+  margin:0px 2% 0px 1%;
+  padding:20rpx 0px;
+  background-color: #FF9800;
+  border-radius:10rpx;
+}

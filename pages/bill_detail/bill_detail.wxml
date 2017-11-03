@@ -1,0 +1,12 @@
+<!-- fff2 -->
+
+<div wx:for="{{orders}}" class="pay_tab_1">
+  <div class="pay_cols1">{{item.commodity.name}}</div>
+  <div class="pay_cols2">X{{item.num}}</div>
+  <div class="pay_cols3">Y{{item.money}}</div>
+</div>
+
+<div class="pay_tab_2">
+  <div class="pay_cols4 pay_cols_greed">总价</div>
+  <div class="pay_cols5">Y{{zj}}</div>
+</div>

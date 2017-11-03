@@ -1,0 +1,10 @@
+<view style="background-color: #F8F8F8;float:left;border-top:2rpx solid #ddd;text-align:center;color:#009688;">
+  <view style="float:left;width:250rpx;padding:20rpx 0;" >消费人</view>
+  <view style="float:left;width:250rpx;padding:20rpx 0;">时间</view>
+  <view style="float:left;width:250rpx;padding:20rpx 0;">总价</view>
+</view>
+<view bindtap="toUrl" data-b-id="{{item.id}}" wx:for="{{bills}}" style="float:left;border-top:2rpx solid #ddd;text-align:center;color:#888;">
+  <view data-b-id="{{item.id}}" style="float:left;width:250rpx;padding:20rpx 0;" >{{item.user.name}}</view>
+  <view data-b-id="{{item.id}}" style="float:left;width:250rpx;padding:20rpx 0;">{{item.ctStr}}</view>
+  <view data-b-id="{{item.id}}" style="float:left;width:250rpx;padding:20rpx 0;">Y{{item.money}}</view>
+</view>

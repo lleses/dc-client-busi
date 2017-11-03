@@ -1,0 +1,28 @@
+<view class="row-1">
+  <button bindtap="toUrl" type="primary" size="mini" class="addType">添加出品</button>
+</view>
+<!-- 左边菜单类型 -->
+<scroll-view scroll-y="true" class="row-2-left" style="height:{{screenHeight}}px;">
+  <view wx:for="{{types}}">
+    <span bindtap="selType" data-type-id="{{item.id}}" data-type-num="{{index}}" class="{{index==typeNum? 'sel':''}}">{{item.name}}</span>
+  </view>
+</scroll-view>
+<!-- 右边明细 -->
+<scroll-view scroll-y="true" class="row-2-right" style="height:{{screenHeight}}px;">
+  <view bindtap="toEditUrl" data-selid="{{item.id}}" class="row-2-right-col" wx:for="{{commoditys}}">
+    <image data-selid="{{item.id}}" style="width:150rpx;height:150rpx;" src="{{'http://localhost:8080'+item.imgPath}}"></image>
+    <view data-selid="{{item.id}}" class="content">
+      <view data-selid="{{item.id}}" class="name" style="margin-top:20rpx;">{{item.name}}</view>
+      <view data-selid="{{item.id}}" class="price" style="color:red;margin-top:20rpx;">{{item.price}}元</view>
+      <view data-selid="{{item.id}}" class="icons"></view>
+    </view>
+  </view>
+</scroll-view>
+
+<!--垂直滚动，这里必须设置高度
+<scroll-view scroll-y="true" style="height: 200px">
+    <view style="background: red; width: 100px; height: 100px" ></view>
+    <view style="background: green; width: 100px; height: 100px"></view>
+    <view style="background: blue; width: 100px; height: 100px"></view>
+    <view style="background: yellow; width: 100px; height: 100px"></view>
+</scroll-view>-->
