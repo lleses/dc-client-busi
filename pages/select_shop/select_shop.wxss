@@ -1,0 +1,74 @@
+/**index.wxss**/  
+page{  
+    height: 100%;  
+}  
+.container{  
+    background: #f5f5f5;  
+}  
+  
+.tit{  
+    display: flex;  
+    flex-direction: row;  
+    justify-content: space-between;  
+    height: 30px;  
+    position: relative;  
+}  
+.tit::before{  
+    content:'';  
+    background: #ffcc00;  
+    width:5px;  
+    height: 100%;  
+    position: absolute;  
+    left: 0;  
+    top: 0;  
+}  
+  
+.title_val{  
+    padding: 0 15px;  
+    font-size: 14px;  
+    color: #555;  
+    line-height: 30px;  
+}  
+.shopslist{  
+    background: #fff;  
+    display: flex;  
+    flex-direction: column;  
+}  
+.shops{  
+    display: flex;  
+    flex-direction: row;  
+    border-bottom: 1px solid #ddd;  
+}  
+.shop-img{  
+    padding: 5px;  
+    width: 80px;  
+    height: 80px;  
+}  
+.shop-cont{  
+    display: flex;  
+    flex: 1;  
+    flex-direction: column;  
+    font-size: 14px;  
+}  
+.shops-navigator{  
+    display: flex;  
+    flex: 1;  
+    flex-direction: column;  
+    justify-content: center;  
+}  
+.shop-name{  
+    display: flex;  
+    flex: 1;  
+    flex-direction: column;  
+    color:#e4393c;  
+    justify-content: center;  
+    font-weight: 600;  
+}  
+.shop-address{  
+    display: flex;  
+    flex: 1;  
+    flex-direction: row;  
+    justify-content: space-between;  
+    color: #555;  
+    
+}  

@@ -1,143 +1,110 @@
-//index.js
-//获取应用实例
-var app = getApp()
+
+//此js针对纯listview数据,没有头部
+
+var utils=require("../../utils/util.js");
+var API=require("../../utils/API.js");
+var netUtil=require("../../utils/netUtil.js");
+var tabUtil=require("../../lib/tab/tabUtil.js");
+var lvUtil=require("../../lib/tab/lvUtil.js");
+
+
+
+var that;
+
+var intentDatas;
+
+var labelIds='0';
+
 Page({
   data: {
-    titleColsNum: 1,
-    types: null,
-    typeIndex: 0,
-    typeId: null,
-    commoditys: {},
-    shoppingCarts: {},
-    userId: null
-  },
-  onShow: function(){
-    var that = this;
-    app.getUserId(function (userId) {
-      //更新数据
-      that.setData({
-        userId: userId
-      });
+    title:'',//todo 设置标题栏
+    tabDatas:[],
+    tabInfo:{},
+    coverUrl:''
 
-      wx.request({
-        url: App.data.server+'/commodity_type/init_data',
-        data: {
-          userId: userId
+  },
+
+
+//以下四个方法是生命周期方法,已封装好,无需改动
+  onLoad: function(options) {
+    that = this;
+    intentDatas = options;
+
+    that.parseIntent(options);
+    var tabStrs = ['店内','提前','外卖'];
+
+    tabUtil.initTab(that,tabStrs,0,function(i){
+      var params = {};
+      params.type=1;
+      params.labelIds ="1,2,3";
+      params.sourceType=0;
+      params.priceType=0;
+      params.categoryIds = i-2;
+      params.pageIndex = 1;
+      params.pageSize = 20;
+      var lvBean = lvUtil.initLv(that,API.Lesson.SEARCH,params,i,'',{
+        getListFromNetData:function(netData){
+          return netData;
         },
-        success: function (res) {
-          that.setData({
-            types: res.data.types,
-            commoditys: res.data.commoditys,
-            shoppingCarts: res.data.shoppingCarts,
-            typeIndex:0
-          });
+        handleItemInfo:function(item){
+          // utils.showVoiceItemPriceText(item);
         }
       });
+      return lvBean;
     });
-  },
-  onLoad: function () {
-    var that = this;
-    app.getUserId(function (userId) {
-      //更新数据
-      that.setData({
-        userId: userId
-      });
 
-      wx.request({
-        url: App.data.server+'/commodity_type/init_data',
-        data: {
-          userId: userId
+   /* var tabs = that.data.tabDatas;
+
+    for(var i in tabStrs){
+      var params = {};
+      params.type=1;
+      params.labelIds =0;
+      params.sourceType=0;
+      params.priceType=0;
+      params.categoryIds = i-2;
+      params.pageIndex = 1;
+      params.pageSize = 20;
+      var lvBean = lvUtil.initLv(that,API.Lesson.SEARCH,params,i,'',{
+        getListFromNetData:function(netData){
+          return netData;
         },
-        success: function (res) {
-          that.setData({
-            types: res.data.types,
-            commoditys: res.data.commoditys,
-            shoppingCarts: res.data.shoppingCarts,
-            typeIndex:0
-          });
+        handleItemInfo:function(item){
+         // utils.showVoiceItemPriceText(item);
         }
       });
-    });
+      tabs.push(lvBean);
+      if(i ==2){
+        console.log("lvBean.onFristIn()----------------------");
+        lvBean.onFristIn();
+      }
+    }*/
 
-    //调用应用实例的方法获取全局数据
-    // app.getUserInfo(function (userInfo) {
-    //   //更新数据
-    //   that.setData({
-    //     userInfo: userInfo
-    //   })
-    // })
+
   },
-  selType: function (e) {
-    var that = this;
-    that.setData({
-      typeIndex: e.target.dataset.typeIndex,
-      typeId: e.target.dataset.typeId
-    });
-    wx.request({
-      url: 'http://localhost:8080/commodity_type/selType',
-      data: {
-        commodityTypeId: e.target.dataset.typeId,
-        userId: that.data.userId
-      },
-      success: function (res) {
-        that.setData({
-          commoditys: res.data
-        });
-      }
-    });
+  onReady: function () {
+
+
+
+
   },
-  toUrl: function (e) {
-    wx.navigateTo({
-      url: '../detail/detail?id=' + e.target.dataset.selid,
-    })
+  onHide:function(){
+
   },
-  addBuyNum: function (e) {
-    var that = this;
-    wx.request({
-      url: 'http://localhost:8080/shoppingCart/add',
-      data: {
-        userId: that.data.userId,
-        commodityId: e.target.dataset.buyId,
-        price: e.target.dataset.comPrice
-      },
-      success: function (res) {
-        var commoditys = that.data.commoditys;
-        for (var i = 0; i < commoditys.length; i++) {
-          var _commodity = commoditys[i];
-          if (_commodity.id == e.target.dataset.buyId) {
-            _commodity.orderNum++;
-          }
-        }
-        that.setData({
-          commoditys: commoditys
-        });
-      }
-    });
+  onShow:function(){
+
   },
-  lessBuyNum: function (e) {
-    var that = this;
-    wx.request({
-      url: 'http://localhost:8080/shoppingCart/less',
-      data: {
-        userId: that.data.userId,
-        commodityId: e.target.dataset.buyId,
-        price: e.target.dataset.comPrice
-      },
-      success: function (res) {
-        var commoditys = that.data.commoditys;
-        for (var i = 0; i < commoditys.length; i++) {
-          var _commodity = commoditys[i];
-          if (_commodity.id == e.target.dataset.buyId) {
-            if (_commodity.orderNum != 0) {
-              _commodity.orderNum--;
-            }
-          }
-        }
-        that.setData({
-          commoditys: commoditys
-        });
-      }
-    });
+
+
+  //todo 滑动监听,各页面自己回调
+  scroll: function(e) {
+    console.log(e)
+  },
+
+  //todo 将intent传递过来的数据解析出来
+  parseIntent:function(options){
+    labelIds =options.labelIds;
+    that.data.title = options.title;
+
   }
-})
 
+})
