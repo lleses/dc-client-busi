@@ -432,7 +432,7 @@ function request(requestConfig){
 
     var wholeUrl = requestConfig.urlTail;
     if (wholeUrl.indexOf("http://") <0||wholeUrl.indexOf("https://") <0){
-        wholeUrl =  getApp().globalData.apiHeadUrl+requestConfig.urlTail;
+        wholeUrl = getApp().data.server+requestConfig.urlTail;
     }
 
     var contentType ='';

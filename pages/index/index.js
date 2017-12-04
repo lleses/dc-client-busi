@@ -1,8 +1,7 @@
 
 //此js针对纯listview数据,没有头部
-
+var app = getApp()
 var utils=require("../../utils/util.js");
-var API=require("../../utils/API.js");
 var netUtil=require("../../utils/netUtil.js");
 var tabUtil=require("../../lib/tab/tabUtil.js");
 var lvUtil=require("../../lib/tab/lvUtil.js");
@@ -14,6 +13,8 @@ var that;
 var intentDatas;
 
 var labelIds='0';
+
+var business_order = "/business/order/index";
 
 Page({
   data: {
@@ -42,7 +43,7 @@ Page({
       params.categoryIds = i-2;
       params.pageIndex = 1;
       params.pageSize = 20;
-      var lvBean = lvUtil.initLv(that,API.Lesson.SEARCH,params,i,'',{
+      var lvBean = lvUtil.initLv(that,business_order,params,i,'',{
         getListFromNetData:function(netData){
           return netData;
         },
@@ -53,31 +54,6 @@ Page({
       return lvBean;
     });
 
-   /* var tabs = that.data.tabDatas;
-
-    for(var i in tabStrs){
-      var params = {};
-      params.type=1;
-      params.labelIds =0;
-      params.sourceType=0;
-      params.priceType=0;
-      params.categoryIds = i-2;
-      params.pageIndex = 1;
-      params.pageSize = 20;
-      var lvBean = lvUtil.initLv(that,API.Lesson.SEARCH,params,i,'',{
-        getListFromNetData:function(netData){
-          return netData;
-        },
-        handleItemInfo:function(item){
-         // utils.showVoiceItemPriceText(item);
-        }
-      });
-      tabs.push(lvBean);
-      if(i ==2){
-        console.log("lvBean.onFristIn()----------------------");
-        lvBean.onFristIn();
-      }
-    }*/
 
 
   },
