@@ -60,6 +60,7 @@ App({
       },
       fail: function (e) {
         console.log('login fail');
+        console.log(e);
       },
     });
   },
