@@ -4,7 +4,7 @@
     "pages/store_list/store_list",
     "pages/commodity/commodity",
     "pages/bill_detail/bill_detail",
-    "pages/commodity_add/commodity_add",
+    "pages/index/index",
     "pages/commodity_edit/commodity_edit"
   ],
   "window": {
@@ -20,16 +20,16 @@
     "borderStyle": "black",
     "list": [
       {
-        "pagePath": "pages/login/login",
+        "pagePath": "pages/index/index",
         "iconPath": "img/icon_1.jpg",
         "selectedIconPath": "img/icon_1.jpg",
-        "text": "点餐"
+        "text": "订单"
       },
       {
-        "pagePath": "pages/store_list/store_list",
+        "pagePath": "pages/commodity/commodity",
         "iconPath": "img/icon_4.jpg",
         "selectedIconPath": "img/icon_4.jpg",
-        "text": "个人"
+        "text": "出品"
       }
     ]
   }
