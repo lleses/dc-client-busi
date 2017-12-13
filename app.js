@@ -82,6 +82,7 @@ App({
   },
   globalData: {
     userInfo: null,
+    storeId: null,
     appId: "wx198ab4de814c9787",
     server: 'http://localhost:8080'
   }

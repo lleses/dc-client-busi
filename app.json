@@ -2,10 +2,11 @@
   "pages": [
     "pages/login/login",
     "pages/store_list/store_list",
-    "pages/commodity/commodity",
-    "pages/bill_detail/bill_detail",
     "pages/index/index",
-    "pages/commodity_edit/commodity_edit"
+    "pages/product/product",
+    "pages/product_add/product_add",
+    "pages/product_edit/product_edit",
+    "pages/bill_detail/bill_detail"
   ],
   "window": {
     "backgroundTextStyle": "light",
