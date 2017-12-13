@@ -2,11 +2,11 @@ var app = getApp()
 Page({
   data: {
     phone: '',
-    password: ''
+    password: '',
+    tabStrs = ['店内', '提前', '外卖'];
   },
   onLoad: function (options) {
     var that = this;
-    var tabStrs = ['店内', '提前', '外卖'];
 
   },
   // 获取输入账号  
