@@ -1,21 +1,4 @@
-
-//此js针对纯listview数据,没有头部
 var app = getApp()
-var utils=require("../../utils/util.js");
-var netUtil=require("../../utils/netUtil.js");
-var tabUtil=require("../../lib/tab/tabUtil.js");
-var lvUtil=require("../../lib/tab/lvUtil.js");
-
-
-
-var that;
-
-var intentDatas;
-
-var labelIds='0';
-
-var business_order = "/business/order/index";
-
 Page({
   data: {
     title:'',//todo 设置标题栏
@@ -26,61 +9,5 @@ Page({
   },
 
 
-//以下四个方法是生命周期方法,已封装好,无需改动
-  onLoad: function(options) {
-    that = this;
-    intentDatas = options;
-
-    that.parseIntent(options);
-    var tabStrs = ['店内','提前','外卖'];
-
-    tabUtil.initTab(that,tabStrs,0,function(i){
-      var params = {};
-      params.type=1;
-      params.labelIds ="1,2,3";
-      params.sourceType=0;
-      params.priceType=0;
-      params.categoryIds = i-2;
-      params.pageIndex = 1;
-      params.pageSize = 20;
-      var lvBean = lvUtil.initLv(that,business_order,params,i,'',{
-        getListFromNetData:function(netData){
-          return netData;
-        },
-        handleItemInfo:function(item){
-          // utils.showVoiceItemPriceText(item);
-        }
-      });
-      return lvBean;
-    });
-
-
-
-  },
-  onReady: function () {
-
-
-
-
-  },
-  onHide:function(){
-
-  },
-  onShow:function(){
-
-  },
-
-
-  //todo 滑动监听,各页面自己回调
-  scroll: function(e) {
-    console.log(e)
-  },
-
-  //todo 将intent传递过来的数据解析出来
-  parseIntent:function(options){
-    labelIds =options.labelIds;
-    that.data.title = options.title;
-
-  }
 
 })

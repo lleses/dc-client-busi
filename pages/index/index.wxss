@@ -1,7 +1,4 @@
-@import "../../lib/tab/tabs.wxss";
-@import "../../lib/pageManager/pageManager.wxss";
-@import "../../lib/listview/albumlv.wxss";
-/**index.wxss**/
+
 .userinfo {
   display: flex;
   flex-direction: column;
