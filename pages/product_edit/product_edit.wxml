@@ -1,0 +1,70 @@
+<form bindsubmit="formSubmit">
+  <button bindtap="uploadImg" type="primary" size="mini" class="addType">上传照片</button>
+  <button bindtap="showAddTypeView" data-num="1" type="primary" size="mini" class="addType">添加分类</button>
+  <button bindtap="showAddTypeView" data-num="2" type="primary" size="mini" class="addType">删除分类</button>
+  <view class="{{isShowImg==1 ? 'tab_show':'tab_hide'}}">
+    <image style="margin:20rpx;width:710rpx;height:300rpx;" src="{{uploadImgSrc}}"></image>
+  </view>
+  <view class="row-2">
+    <view class="row-2-1">
+      <span>*名称</span>
+      <input name="name" type="text" value="{{commodity.name}}" />
+      <input name="id" type="text" value="{{commodity.id}}" style="display:none;" />
+    </view>
+    <view class="row-2-1">
+      <span>*分类</span>
+      <picker bindchange="typePicker" data-typeid="{{typeList[typeIndex].id}}" data-type-sel-name="{{typeList[typeIndex].name}}" value="{{typeIndex}}" range="{{typeList}}" range-key="{{'name'}}">
+        <view>{{typeList[typeIndex].name}}</view>
+        <input name="type" type="text" class="tab_hide" value="{{typeList[typeIndex].id}}" />
+      </picker>
+    </view>
+    <view class="row-2-2">
+      <span>描述</span>
+      <input name="remark" type="text" value="{{commodity.remark}}" />
+    </view>
+  </view>
+  <!-- 价格tab -->
+  <view class="tab3">
+    <view class="tab3-row1">
+      <view class="tab3-row1-cols1">规格</view>
+      <view class="tab3-row1-cols2">原价</view>
+      <view class="tab3-row1-cols3">会员价</view>
+    </view>
+    <view class="tab3-row2">
+      <picker bindchange="pricePicker" data-pricename="{{priceType[priceIndex]}}" value="{{priceIndex}}" range="{{priceType}}" class="tab3-row2-cols1">
+        <view>{{priceType[priceIndex]}}</view>
+        <input name="priceType" type="text" class="tab_hide" value="{{priceType[priceIndex]}}" />
+      </picker>
+      <input name="price" type="number" class="tab3-row2-cols2" value="{{commodity.price}}" />
+      <input name="memberPrice" type="number" class="tab3-row2-cols3" value="{{commodity.memberPrice}}" />
+    </view>
+  </view>
+  <button formType="submit" type="primary" class="row-last" style="width:330rpx;">提交</button>
+  <button bindtap="deleteCommodity" type="primary" class="row-last" style="width:330rpx;">删除</button>
+</form>
+<!-- 新增分类 -->
+<view id="ShowAddType" class="popup-layer {{isShow==1 ? 'tab_show':'tab_hide'}}">
+  <view class="addType-view">
+    <view class="addType-view-title">添加分类</view>
+    <view class="addType-view-input">
+      <input name="name" value="{{typeName}}" type="text" placeholder="分类名称" bindinput="typeNameInput" />
+    </view>
+    <view class="addType-view-botton">
+      <view bindtap="showAddTypeView" data-num="10" class="addType-view-botton-cans">取消</view>
+      <view bindtap="saveType" class="addType-view-botton-ok">确定</view>
+    </view>
+  </view>
+</view>
+<!-- 修改分类 -->
+<view id="ShowAddType" class="popup-layer {{isShow==2 ? 'tab_show':'tab_hide'}}">
+  <view class="addType-view">
+    <view class="addType-view-title">删除分类</view>
+    <view class="addType-view-input" style="height:510rpx;overflow-y: auto;">
+      <view bindtap="selType" data-sel-type-id="{{item.id}}" wx:for="{{typeList}}" class="{{item.id==selTypeId ? 'sel-type-color':''}}" style="padding:20rpx;border-bottom:2rpx solid #ddd;float:left;width:460rpx;text-align:left;">{{item.name}}</view>
+    </view>
+    <view class="addType-view-botton">
+      <view bindtap="showEidtTypeView" data-num="10" class="addType-view-botton-cans">取消</view>
+      <view bindtap="delType" class="addType-view-botton-ok">删除</view>
+    </view>
+  </view>
+</view>
