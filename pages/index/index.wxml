@@ -1,5 +1,5 @@
-<view>
-<view>最新</view>
-<view>店内</view>
-<view>外卖</view>
+<view class="tabs">
+  <view bindtap="updateTabIndex" data-tab-index="1" class="tabs-1 {{tabIndex==1? 'sel-tab':''}}">最新</view>
+  <view bindtap="updateTabIndex" data-tab-index="2" class="tabs-1 {{tabIndex==2? 'sel-tab':''}}">店内</view>
+  <view bindtap="updateTabIndex" data-tab-index="3" class="tabs-1 {{tabIndex==3? 'sel-tab':''}}">外卖</view>
 </view>

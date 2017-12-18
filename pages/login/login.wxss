@@ -60,19 +60,13 @@ page {
   margin-top: 1px;
 }
 
-/*按钮*/
-
 .loginBtnView {
   width: 100%;
   height: auto;
   background-color: #f2f2f2;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  padding-bottom: 0px;
 }
 
 .loginBtn {
-  width: 80%;
   margin-top: 35px;
   font-size: 14px;
 }
