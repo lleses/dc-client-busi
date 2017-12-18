@@ -2,8 +2,8 @@
   <button bindtap="uploadImg" type="primary" size="mini" class="addType">上传照片</button>
   <button bindtap="showAddTypeView" data-num="1" type="primary" size="mini" class="addType">添加分类</button>
   <button bindtap="showAddTypeView" data-num="2" type="primary" size="mini" class="addType">删除分类</button>
-  <view class="{{imgPath ? 'tab_show':'tab_hide'}}">
-    <image style="margin:20rpx;width:710rpx;height:300rpx;" src="{{server + imgPath}}"></image>
+  <view class="{{!!imgPath ? 'tab_show':'tab_hide'}}">
+    <image style="margin:20rpx;width:710rpx;height:300rpx;" src="{{!!imgPath ? server + imgPath : '' }}"></image>
   </view>
   <view class="row-2">
     <view class="row-2-1">
@@ -30,9 +30,9 @@
       <view class="tab3-row1-cols3">会员价</view>
     </view>
     <view class="tab3-row2">
-      <picker bindchange="unitsPicker" data-pricename="{{units[priceIndex]}}" value="{{priceIndex}}" range="{{units}}" class="tab3-row2-cols1">
-        <view>{{units[priceIndex]}}</view>
-        <input name="units" type="text" class="tab_hide" value="{{units[priceIndex]}}" />
+      <picker bindchange="unitsPicker" data-pricename="{{units[unitIndex]}}" value="{{unitIndex}}" range="{{units}}" class="tab3-row2-cols1">
+        <view>{{units[unitIndex]}}</view>
+        <input name="unit" type="text" class="tab_hide" value="{{units[unitIndex]}}" />
       </picker>
       <input name="price" type="number" class="tab3-row2-cols2" value="" />
       <input name="memberPrice" type="number" class="tab3-row2-cols3" value="" />
@@ -58,7 +58,7 @@
   <view class="addType-view">
     <view class="addType-view-title">删除分类</view>
     <view class="addType-view-input" style="height:510rpx;overflow-y: auto;">
-      <view bindtap="selType" data-sel-type-id="{{item.id}}" wx:for="{{productTypes}}" class="{{item.id==selTypeId ? 'sel-type-color':''}}" style="padding:20rpx;border-bottom:2rpx solid #ddd;float:left;width:460rpx;text-align:left;">{{item.name}}</view>
+      <view bindtap="selType" data-sel-type-id="{{item.id}}" wx:for="{{productTypes}}" wx:key="{{id}}" class="sel-type-list {{item.id==selTypeId ? 'sel-type-color':''}}">{{item.name}}</view>
     </view>
     <view class="addType-view-botton">
       <view bindtap="showEidtTypeView" data-num="100" class="addType-view-botton-cans">取消</view>

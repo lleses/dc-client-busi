@@ -12,7 +12,7 @@ Page({
     screenHeight: 110
   },
   onShow: function () {
-    console.log("onLoad--commodity");
+    console.log("onLoad--");
     var _that = this;
     wx.getSystemInfo({
       success: function (rs) {

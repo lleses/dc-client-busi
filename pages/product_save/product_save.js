@@ -10,15 +10,13 @@ Page({
 		inputTypeName : "",//添加菜品分类的input名称
 		selTypeId : null,//删除菜品，选中的菜单ID
 		isShow : 100,
-		imgPath : ""
+		imgPath : "",
+		unitIndex : 0,// 单位选择列表的index
 
-		isShowImg : 2,
-		typeId : "",
-		priceIndex : 0,
-		priceTypeName : '碟',
+		typeId : ""
 	},
 	onLoad : function(option) {
-		console.log("onLoad--commodity_add");
+		console.log("onLoad--");
 		var _that = this;
 		var _id = option.id;
 		if (!!_id) {
@@ -176,8 +174,7 @@ Page({
 	//菜品单位picker
 	unitsPicker : function(e) {
 		this.setData({
-			priceIndex : e.detail.value,
-			priceTypeName : e.target.dataset.pricename
+			unitIndex : e.detail.value
 		})
 	},
 	//删除分类->选择类型
@@ -222,8 +219,7 @@ Page({
 						var _msg = "上传失败";
 						if (!!data) {
 							that.setData({
-								imgPath : data,
-								isShowImg : 1
+								imgPath : data
 							});
 							_msg = "上传成功";
 						}
@@ -259,25 +255,32 @@ Page({
 			});
 			return;
 		}
-
 		// 提交表单
 		wx.request({
-			url : app.globalData.server + '/commodity/add',
+			url : app.globalData.server + '/busi/product/save',
 			data : {
+				id : _that.data.id,
+				storeId : app.globalData.storeId,
+				productTypeId : e.detail.value.type,	
 				name : e.detail.value.name,
-				commodityTypeId : e.detail.value.type,
+				imgPath : _that.data.imgPath,
 				remark : e.detail.value.remark,
-				price : e.detail.value.price,
-				memberPrice : e.detail.value.memberPrice,
-				priceType : e.detail.value.priceType,
-				imgPath : _that.data.imgPath
+				price : e.detail.value.price,//原价
+				memberPrice : e.detail.value.memberPrice,//会员价
+				unit : e.detail.value.unit
 			},
 			success : function(res) {
-				if (res.data == "0") {
-					wx.showModal({
-						title : '温馨提示',
-						content : '名称重复',
-						showCancel : false
+				wx.hideLoading();
+				if (!res.statusCode == 200) {
+					console.log(res.errMsg);
+					return;
+				}
+				var _rs = res.data;
+				console.log("product -> save,返回信息----");
+				console.log(_rs);
+				if (_rs.code == 100) {
+					wx.showToast({
+						title : _rs.message
 					});
 				} else {
 					// 获取页面栈
@@ -289,7 +292,7 @@ Page({
 						prePage.onLoad();
 					}
 					wx.showToast({
-						title : "成功",
+						title : "操作成功",
 						success : function() {
 							setTimeout(function() {
 								wx.navigateBack({

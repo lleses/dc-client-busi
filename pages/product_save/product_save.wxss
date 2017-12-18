@@ -201,3 +201,6 @@
 .sel-type-color{
   background-color: rgba(255, 152, 0, 0.45);
 }
+.sel-type-list{
+padding:20rpx;border-bottom:2rpx solid #ddd;float:left;width:460rpx;text-align:left;
+}
