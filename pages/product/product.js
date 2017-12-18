@@ -71,12 +71,12 @@ Page({
   },
   toUrl: function () {
     wx.navigateTo({
-      url: '../commodity_add/commodity_add',
+      url: '../product_save/product_save',
     })
   },
   toEditUrl: function (e) {
     wx.navigateTo({
-      url: '../commodity_edit/commodity_edit?id=' + e.target.dataset.selid
+      url: '../product_edit/product_edit?id=' + e.target.dataset.selid
     })
   }
 })
