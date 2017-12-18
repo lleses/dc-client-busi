@@ -2,14 +2,13 @@
 var app = getApp()
 Page({
   data: {
-    titleColsNum: 1,
-    types: {},
-    typeNum: 0,
-    typeId: null,
-    selId: null,
-    commodityList: {},
     server: app.globalData.server,
-    screenHeight: 110
+    screenHeight: 110,
+    productTypes: {},
+    typeIndex: 0,
+    isShow: 100,//100:隐藏 1:显示
+    productId: null,
+    productStatus: "SJ" // SJ:上架 XJ:下架 GQ:沽清
   },
   onShow: function () {
     console.log("onLoad--");
@@ -21,63 +20,138 @@ Page({
         _that.setData({
           screenHeight: _screenHeight
         });
-        app.getSessionId(function (p_sessionId) {
-          console.log("p_sessionId:" + p_sessionId);
-          wx.request({
-            url: app.globalData.server + '/commodity_type/init_data',
-            data: {
-              sessionId: p_sessionId,
-              appId: app.globalData.appId
-            },
-            success: function (res) {
-              _that.setData({
-                types: res.data.types,
-                typeNum: 0,
-                typeId: null,
-                commoditys: res.data.commoditys
-              });
+
+        wx.request({
+          url: app.globalData.server + '/busi/product/list',
+          data: {
+            storeId: app.globalData.storeId
+          },
+          success: function (res) {
+            wx.hideLoading();
+            if (!res.statusCode == 200) {
+              console.log(res.errMsg);
+              return;
             }
-          });
-        });
+            var _rs = res.data;
+            console.log("list,返回信息----");
+            console.log(_rs);
+            if (_rs.code == 100) {
+              console.log(_rs.message);
+              return;
+            }
+            _that.setData({
+              productTypes: _rs.data.productTypes,
+              typeIndex: 0
+            });
+          }
+        })
       }
     });
   },
-  titleCols: function (e) {
-    this.setData({
-      titleColsNum: e.target.dataset.num
-    })
-  },
   selType: function (e) {
-    console.log("onLoad--commodity");
-    var _that = this;
-    app.getSessionId(function (p_sessionId) {
-      _that.setData({
-        typeNum: e.target.dataset.typeNum,
-        typeId: e.target.dataset.typeId
-      });
-      wx.request({
-        url: app.globalData.server + '/commodity_type/selType',
-        data: {
-          sessionId: p_sessionId,
-          commodityTypeId: e.target.dataset.typeId
-        },
-        success: function (res) {
-          _that.setData({
-            commoditys: res.data.commoditys
-          });
-        }
-      });
+    this.setData({
+      typeIndex: e.target.dataset.typeIndex
     });
   },
-  toUrl: function () {
+  toSaveProduct: function () {
     wx.navigateTo({
       url: '../product_save/product_save',
     })
   },
-  toEditUrl: function (e) {
+  showBox: function (e) {
+    this.setData({
+      isShow: 1,
+      productStatus: e.currentTarget.dataset.productStatus,
+      productId: e.currentTarget.dataset.productId
+    });
+  },
+  hideBox: function () {
+    this.setData({
+      isShow: 100
+    });
+  },
+  updateProductStatus: function (e) {
+    var _that = this;
+    wx.request({
+      url: app.globalData.server + '/busi/product/updateProductStatus',
+      data: {
+        productStatus: e.currentTarget.dataset.productStatus,
+        storeId: app.globalData.storeId,
+        productId: _that.data.productId
+      },
+      success: function (res) {
+        wx.hideLoading();
+        if (!res.statusCode == 200) {
+          console.log(res.errMsg);
+          return;
+        }
+        var _rs = res.data;
+        console.log("updateProductStatus,返回信息----");
+        console.log(_rs);
+        if (_rs.code == 100) {
+          console.log(_rs.message);
+          return;
+        }
+        wx.showToast({
+          title: '操作成功',
+          success: function () {
+            setTimeout(function () {
+              _that.setData({
+                productTypes: _rs.data.productTypes
+              });
+            }, 1500)
+          }
+        });
+      }
+    })
+  },
+  batchUpdateProductStatus: function (e) {
+    var _that = this;
+    wx.showModal({
+      title: '温馨提示',
+      content: '确定要批量操作吗?',
+      success: function (res) {
+        if (res.confirm) {
+          wx.request({
+            url: app.globalData.server + '/busi/product/batchUpdateProductStatus',
+            data: {
+              productStatus: e.currentTarget.dataset.productStatus,
+              storeId: app.globalData.storeId
+            },
+            success: function (res) {
+              wx.hideLoading();
+              if (!res.statusCode == 200) {
+                console.log(res.errMsg);
+                return;
+              }
+              var _rs = res.data;
+              console.log("updateProductStatus,返回信息----");
+              console.log(_rs);
+              if (_rs.code == 100) {
+                console.log(_rs.message);
+                return;
+              }
+              wx.showToast({
+                title: '操作成功',
+                success: function () {
+                  setTimeout(function () {
+                    _that.setData({
+                      productTypes: _rs.data.productTypes
+                    });
+                  }, 1500)
+                }
+              });
+            }
+          })
+        } else if (res.cancel) {
+
+        }
+      }
+    })
+  },
+  toEditProduct: function (e) {
     wx.navigateTo({
-      url: '../product_edit/product_edit?id=' + e.target.dataset.selid
+      url: '../product_save/product_save?id=' + this.data.productId
     })
   }
 })
-

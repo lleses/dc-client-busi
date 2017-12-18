@@ -24,43 +24,59 @@ Page({
 				id : _id
 			});
 		}
-		app.getSessionId(function(p_sessionId) {
-			console.log("p_sessionId:" + p_sessionId);
-			wx.request({
-				url : app.globalData.server + '/busi/product/toSave',
-				data : {
-					storeId : app.globalData.storeId,
-					id : _id
-				},
-				success : function(res) {
-					wx.hideLoading();
-					if (!res.statusCode == 200) {
-						console.log(res.errMsg);
-						return;
-					}
-					var _rs = res.data;
-					console.log("list,返回信息----");
-					console.log(_rs);
-					if (_rs.code == 100) {
-						console.log(_rs.message);
-						return;
-					}
-					if (!!_id) {// 修改
-						_that.setData({
-							productTypes : _rs.data.productTypes,//菜品类型
-							units : _rs.data.units,//菜品单位
-							product : _rs.data.product,
-							imgPath : _rs.data.product.imgPath
-						});
-					} else {// 新增
-						_that.setData({
-							productTypes : _rs.data.productTypes,//菜品类型
-							units : _rs.data.units//菜品单位
-						});
-					}
+		wx.request({
+			url : app.globalData.server + '/busi/product/toSave',
+			data : {
+				storeId : app.globalData.storeId,
+				id : _that.data.id
+			},
+			success : function(res) {
+				wx.hideLoading();
+				if (!res.statusCode == 200) {
+					console.log(res.errMsg);
+					return;
 				}
-			})
-		});
+				var _rs = res.data;
+				console.log("list,返回信息----");
+				console.log(_rs);
+				if (_rs.code == 100) {
+					console.log(_rs.message);
+					return;
+				}
+				if (!!_id) {// 修改
+					var _product = _rs.data.product;
+					//选择单位
+					var _unitIndex = 0;
+					var _units = _rs.data.units;
+					for (var i = 0; i < _units.length; i++) {
+						if(_units[i]==_product.unit){
+							_unitIndex = i;
+						}
+					}
+					//选择菜品类型
+					var _typeIndex = 0;
+					var _productTypes = _rs.data.productTypes;
+					for (var i = 0; i < _productTypes.length; i++) {
+						if(_productTypes[i].id == _rs.data.selTypeId){
+							_typeIndex = i;
+						}
+					}
+					_that.setData({
+						productTypes : _rs.data.productTypes,//菜品类型
+						units : _units,//菜品单位
+						product : _product,
+						imgPath : _product.imgPath,
+						unitIndex : _unitIndex,
+						typeIndex : _typeIndex
+					});
+				} else {// 新增
+					_that.setData({
+						productTypes : _rs.data.productTypes,//菜品类型
+						units : _rs.data.units//菜品单位
+					});
+				}
+			}
+		})
 	},
 	//添加分类
 	saveType : function(e) {

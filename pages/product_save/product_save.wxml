@@ -8,7 +8,7 @@
   <view class="row-2">
     <view class="row-2-1">
       <span>*名称</span>
-      <input name="name" type="text" />
+      <input name="name" type="text" value="{{product.name}}"/>
     </view>
     <view class="row-2-1">
       <span>*分类</span>
@@ -19,7 +19,7 @@
     </view>
     <view class="row-2-2">
       <span>描述</span>
-      <input name="remark" type="text" />
+      <input name="remark" value="{{product.remark}}" type="text"  />
     </view>
   </view>
   <!-- 价格tab -->
@@ -34,8 +34,8 @@
         <view>{{units[unitIndex]}}</view>
         <input name="unit" type="text" class="tab_hide" value="{{units[unitIndex]}}" />
       </picker>
-      <input name="price" type="number" class="tab3-row2-cols2" value="" />
-      <input name="memberPrice" type="number" class="tab3-row2-cols3" value="" />
+      <input name="price" value="{{product.price}}" type="number" class="tab3-row2-cols2" />
+      <input name="memberPrice" value="{{product.memberPrice}}" type="number" class="tab3-row2-cols3" />
     </view>
   </view>
   <button formType="submit" type="primary" class="row-last">提交</button>
