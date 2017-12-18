@@ -1,25 +1,21 @@
-//index.js
-//获取应用实例
 var app = getApp()
 Page({
 	data : {
-		id : null,
-		productTypes : null,
-		product : null,
+		server : app.globalData.server,
+		id : "",
+		productTypes : "",
+		product : "",
+		units : "",// 单位
+		typeIndex : 0,//菜单分类选择列表的index
+		inputTypeName : "",//添加菜品分类的input名称
+		selTypeId : null,//删除菜品，选中的菜单ID
+		isShow : 100,
+		imgPath : ""
 
-		isShow : 10,
 		isShowImg : 2,
-
-		typeName : null,
-		typeIndex : 0,
-		typeId : null,
-		selTypeId : null,
-		// 单位
-		priceType : [ '碟', '半打', '锅', '2只', '份', '串', '条', '包', '打', '大煲', '中煲', '小煲', '碗', '煲', '时价', '例', '斤', '只', '半只' ],
+		typeId : "",
 		priceIndex : 0,
 		priceTypeName : '碟',
-		uploadImgPath : "",
-		uploadImgSrc : ""
 	},
 	onLoad : function(option) {
 		console.log("onLoad--commodity_add");
@@ -53,23 +49,26 @@ Page({
 					}
 					if (!!_id) {// 修改
 						_that.setData({
-							productTypes : _rs.data.productTypes,
-							product : _rs.data.product
+							productTypes : _rs.data.productTypes,//菜品类型
+							units : _rs.data.units,//菜品单位
+							product : _rs.data.product,
+							imgPath : _rs.data.product.imgPath
 						});
 					} else {// 新增
 						_that.setData({
-							// //菜品类型
-							productTypes : _rs.data.productTypes
+							productTypes : _rs.data.productTypes,//菜品类型
+							units : _rs.data.units//菜品单位
 						});
 					}
 				}
 			})
 		});
 	},
+	//添加分类
 	saveType : function(e) {
-		var that = this;
-		var _typeName = that.data.typeName;
-		if (!_typeName) {
+		var _that = this;
+		var _inputTypeName = _that.data.inputTypeName;
+		if (!_inputTypeName) {
 			wx.showModal({
 				title : '温馨提示',
 				content : '名称不能为空',
@@ -81,7 +80,7 @@ Page({
 			url : app.globalData.server + '/busi/productType/save',
 			data : {
 				storeId : app.globalData.storeId,
-				name : _typeName
+				name : _inputTypeName
 			},
 			success : function(res) {
 				wx.hideLoading();
@@ -98,13 +97,13 @@ Page({
 					});
 				} else {
 					wx.showToast({
-						title : '处理成功',
+						title : '操作成功',
 						success : function() {
 							setTimeout(function() {
-								that.setData({
-									isShow : 10,
-									typeName : null,
-									typeList : res.data
+								_that.setData({
+									isShow : 100,//关闭弹框
+									inputTypeName : null,
+									productTypes : _rs.data
 								});
 							}, 1500)
 						}
@@ -113,9 +112,10 @@ Page({
 			}
 		})
 	},
+	//删除分类
 	delType : function(e) {
-		var that = this;
-		var _selTypeId = that.data.selTypeId;
+		var _that = this;
+		var _selTypeId = _that.data.selTypeId;
 		if (!_selTypeId) {
 			wx.showModal({
 				title : '温馨提示',
@@ -127,23 +127,37 @@ Page({
 		wx.request({
 			url : app.globalData.server + '/busi/productType/del',
 			data : {
+				storeId : app.globalData.storeId,
 				id : _selTypeId
 			},
 			success : function(res) {
-				if (res.data == "0") {
+				wx.hideLoading();
+				if (!res.statusCode == 200) {
+					console.log(res.errMsg);
+					return;
+				}
+				var _rs = res.data;
+				console.log("del,返回信息----");
+				console.log(_rs);
+				if (_rs.code == 100) {
 					wx.showToast({
-						title : '名称重复'
+						title : _rs.message
 					});
 				} else {
 					wx.showToast({
-						title : '处理成功',
+						title : '操作成功',
 						success : function() {
+							var _typeIndex = parseInt(_that.data.typeIndex);
+							if(!!_rs.data && _rs.data.length < (_typeIndex+1)){
+								_typeIndex = 0;
+							}
 							setTimeout(function() {
-								that.setData({
-									isShow : 10,
-									typeName : null,
-									typeList : res.data,
-									selTypeId : null
+								_that.setData({
+									isShow : 100,//关闭弹框
+									inputTypeName : "",
+									productTypes : _rs.data,
+									selTypeId : null,
+									typeIndex : _typeIndex
 								});
 							}, 1500)
 						}
@@ -152,18 +166,21 @@ Page({
 			}
 		})
 	},
+	//分类picker
 	typePicker : function(e) {
 		this.setData({
 			typeIndex : e.detail.value,
 			typeId : e.target.dataset.typeid
 		})
 	},
-	pricePicker : function(e) {
+	//菜品单位picker
+	unitsPicker : function(e) {
 		this.setData({
 			priceIndex : e.detail.value,
 			priceTypeName : e.target.dataset.pricename
 		})
 	},
+	//删除分类->选择类型
 	selType : function(e) {
 		this.setData({
 			selTypeId : e.target.dataset.selTypeId
@@ -171,7 +188,7 @@ Page({
 	},
 	typeNameInput : function(e) {
 		this.setData({
-			typeName : e.detail.value
+			inputTypeName : e.detail.value
 		})
 	},
 	showAddTypeView : function(e) {
@@ -196,12 +213,16 @@ Page({
 					name : 'file',
 					formData : {},
 					success : function(res) {
+						wx.hideLoading();
+						if (!res.statusCode == 200) {
+							console.log(res.errMsg);
+							return;
+						}
 						var data = res.data;
 						var _msg = "上传失败";
 						if (!!data) {
 							that.setData({
-								uploadImgPath : data,
-								uploadImgSrc : app.globalData.server + data,
+								imgPath : data,
 								isShowImg : 1
 							});
 							_msg = "上传成功";
@@ -216,24 +237,24 @@ Page({
 		})
 	},
 	formSubmit : function(e) {
-		var that = this;
-		var msg = "";
+		var _that = this;
+		var _msg = "";
 		// 验证
 		if (!e.detail.value.name) {
-			msg = "名称不能为空";
+			_msg = "名称不能为空";
 		} else if (!e.detail.value.type) {
-			msg = "分类不能为空";
+			_msg = "分类不能为空";
 		} else if (!e.detail.value.price) {
-			msg = "原价不能为空";
+			_msg = "原价不能为空";
 		} else if (!e.detail.value.memberPrice) {
-			msg = "会员价不能为空";
-		} else if (!that.data.uploadImgPath) {
-			msg = "请上传图片";
+			_msg = "会员价不能为空";
+		} else if (!_that.data.imgPath) {
+			_msg = "请上传图片";
 		}
-		if (!!msg) {
+		if (!!_msg) {
 			wx.showModal({
 				title : '温馨提示',
-				content : msg,
+				content : _msg,
 				showCancel : false
 			});
 			return;
@@ -249,7 +270,7 @@ Page({
 				price : e.detail.value.price,
 				memberPrice : e.detail.value.memberPrice,
 				priceType : e.detail.value.priceType,
-				imgPath : that.data.uploadImgPath
+				imgPath : _that.data.imgPath
 			},
 			success : function(res) {
 				if (res.data == "0") {
